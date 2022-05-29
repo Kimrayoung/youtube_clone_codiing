@@ -8,7 +8,7 @@ export default function MainContentContainer(props) {
         <MainContentContainerStyled>
             <MainContentStyled>
                 {data && data.map((d, i) => (
-                    <VideoContent>
+                    <VideoContent key={i}>
                         <VideoImg src={d.snippet.thumbnails.default.url}></VideoImg>
                         <Title key={i}>{d.snippet.title}</Title>
                     </VideoContent>
@@ -27,7 +27,7 @@ const MainContentContainerStyled = styled.div`
 
 const MainContentStyled = styled.div`
     display: flex;
-    // justify-content: space-around;
+    justify-content: space-around;
     flex-wrap: wrap;
     width: 80%;
 `
