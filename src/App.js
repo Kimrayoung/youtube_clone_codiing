@@ -11,6 +11,7 @@ function App({ youtube }) {
 
     //초기 데이터
     const fetchmostPopularData = async () => {
+        //async&await를 사용했으므로 then 혹은 catch를 사용할 필요가 없음
         const data = await youtube.fetchmostPopularData();
         setMostPopular(data);
     };
@@ -25,7 +26,6 @@ function App({ youtube }) {
         //이유: 계속 네트워크 통신을 할 것 이므로
         //이렇게 여기서 만들어주는 것이 아니라 dependency를 외부에서 받아와야 함 -> 즉, 클래스를 외부에서 받아와야 한다, -> 그리고 이 클래스는 가장 최상단에서 가져와야 함
         const data = await youtube.navbarSubmitHandler(searchData);
-        console.log(data);
         setMostPopular(data);
     };
 
