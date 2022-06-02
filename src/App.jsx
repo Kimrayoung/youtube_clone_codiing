@@ -8,13 +8,14 @@ import { useEffect, useState } from "react";
 function App({ youtube }) {
     //youtube라는 클래스를 받아옴 (즉, dependency를 받아옴)
     const [mostPopularData, setMostPopular] = useState([]);
-
+    console.log('checking', youtube);
     //초기 데이터
     const fetchmostPopularData = async () => {
         //async&await를 사용했으므로 then 혹은 catch를 사용할 필요가 없음
         const data = await youtube.fetchmostPopularData();
         setMostPopular(data);
     };
+    console.log(mostPopularData);
     useEffect(() => {
         fetchmostPopularData();
     }, []);

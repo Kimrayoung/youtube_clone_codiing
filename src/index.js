@@ -2,10 +2,11 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./App";
-import Youtube from "./components/service/youtube";
+import Youtube from "./service/youtube";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 const youtube = new Youtube(process.env.REACT_APP_YOUTUBE_API_KEY);
+console.log("index.js youtube checking", youtube);
 //이렇게 여기서 한번만 클래스를 만들어주고 dependency가 필요한 곳에 전달해줌
 root.render(
     <React.StrictMode>

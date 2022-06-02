@@ -10,6 +10,7 @@ class Youtube {
         const response = await axios.get(
             `https://youtube.googleapis.com/youtube/v3/videos?part=snippet&chart=mostPopular&maxResults=26&key=${this.key}`
         );
+        console.log("youtube.js", this.key);
         return response.data.items;
     }
 

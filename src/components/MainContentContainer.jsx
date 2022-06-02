@@ -1,9 +1,9 @@
 //가져온 비디오들을 보여주는 곳
-import { type } from "@testing-library/user-event/dist/type";
 import styled from "styled-components";
 
 export default function MainContentContainer(props) {
     const data = props.mostPopularData;
+    console.log(data);
     return (
         <MainContentContainerStyled>
             <MainContentStyled>
