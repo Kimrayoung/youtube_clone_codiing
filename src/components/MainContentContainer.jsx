@@ -3,12 +3,12 @@ import styled from "styled-components";
 
 export default function MainContentContainer(props) {
     const data = props.mostPopularData;
-    console.log(data);
+    console.log(props.isClicked);
     return (
         <MainContentContainerStyled>
             <MainContentStyled>
                 {data && data.map((d, i) => (
-                    <VideoContent key={i}>
+                    <VideoContent isClicked={props.isClicked} key={i} onClick={() => (props.selectedDataHandler(d))}>
                         <VideoImg src={d.snippet.thumbnails.default.url}></VideoImg>
                         <Title key={i}>{d.snippet.title}</Title>
                     </VideoContent>
@@ -29,14 +29,14 @@ const MainContentStyled = styled.div`
     display: flex;
     justify-content: space-around;
     flex-wrap: wrap;
-    width: 80%;
+    width: 90%;
 `
 
 const VideoContent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 45%;
+    width: ${(props) => props.isClicked ? '100%' : '45%'};
     border: 2px solid #DFDFDE;
     border-radius: 10px;
     margin: 10px;
@@ -53,6 +53,7 @@ const Title = styled.div`
     width: 350px;
     height: 100px;
     margin: 20px;
+    overflow: scroll;
 `
 
 const VideoImg = styled.img`

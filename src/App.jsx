@@ -1,23 +1,26 @@
-import axios from "axios";
 import "./App.css";
 import Navbar from "./components/Navbar";
 import MostPopularVideoContainer from "./components/MainContentContainer";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
+import VideoContainer from "./components/VideoContainer";
 
 function App({ youtube }) {
     //youtube라는 클래스를 받아옴 (즉, dependency를 받아옴)
     const [mostPopularData, setMostPopular] = useState([]);
-    console.log('checking', youtube);
+    const [isClicked, setIsClicked] = useState(false);
+    const [selectedData, setSelectedData] = useState({});
+
     //초기 데이터
     const fetchmostPopularData = async () => {
         //async&await를 사용했으므로 then 혹은 catch를 사용할 필요가 없음
         const data = await youtube.fetchmostPopularData();
         setMostPopular(data);
     };
-    console.log(mostPopularData);
+
     useEffect(() => {
         fetchmostPopularData();
+        setIsClicked(false);
     }, []);
 
     //params -> key=value즉, 입력한 검색어를 가지고 검색하고 싶다면 q=내가 입력한 검색어 이런식으로 변경해주면 됨
@@ -28,6 +31,7 @@ function App({ youtube }) {
         //이렇게 여기서 만들어주는 것이 아니라 dependency를 외부에서 받아와야 함 -> 즉, 클래스를 외부에서 받아와야 한다, -> 그리고 이 클래스는 가장 최상단에서 가져와야 함
         const data = await youtube.navbarSubmitHandler(searchData);
         setMostPopular(data);
+        setIsClicked(false);
     };
 
     //navbar에서 enter를 눌렀을때
@@ -37,6 +41,11 @@ function App({ youtube }) {
         }
     }
 
+    const selectedDataHandler = async (data) => {
+        await setSelectedData(data);
+        await setIsClicked(true);
+    }
+    console.log(isClicked);
     return (
         <StyledContainer>
             <Navbar
@@ -44,7 +53,10 @@ function App({ youtube }) {
                 navbarSubmitHandler={navbarSubmitHandler}
                 onKeyPress={onKeyPress}
             />
-            <MostPopularVideoContainer mostPopularData={mostPopularData} />
+            <ContainerStyled isClicked={isClicked}>
+                {isClicked ? <VideoContainer data={selectedData} /> : null}
+                <MostPopularVideoContainer mostPopularData={mostPopularData} selectedDataHandler={selectedDataHandler} isClicked={isClicked} />
+            </ContainerStyled>
         </StyledContainer>
     );
 }
@@ -59,3 +71,8 @@ const StyledContainer = styled.div`
     align-items: center;
     flex-direction: column;
 `;
+
+const ContainerStyled = styled.div`
+    display: ${(props) => props.isClicked ? "grid" : "block"};
+    grid-template-columns: ${(props) => props.isClicked ? "70% 30%" : "none"};
+`

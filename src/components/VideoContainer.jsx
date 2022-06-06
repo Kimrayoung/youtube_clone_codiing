@@ -4,9 +4,32 @@
 //문제 --> 여기서 비디오를 어떻게 보여주는가,,?
 import styled from "styled-components";
 
-export default function VideoContainer() {
+export default function VideoContainer(props) {
+    console.log('props checking', props);
+    const data = props.data;
+    const snippet = data.snippet;
+    const videoId = data.id.videoId === undefined ? data.id : data.id.videoId;
+    const description = snippet.description;
+    const title = snippet.title;
+    const channelTitle = snippet.channelTitle;
+
     return (
         <StyledVideoContainer>
+            <VideoBox
+                key={videoId}
+                id="ytplayer" type="text/html"
+                src={`https://www.youtube.com/embed/${videoId}`}
+            >
+                {/* <iframe
+                    key={videoId}
+                    id="ytplayer" type="text/html" width="600" height="405"
+                    src={`https://www.youtube.com/embed/${videoId}`}
+                    style={{ position: "sticky" }}
+                /> */}
+            </VideoBox>
+            <TitleContainer>{title}</TitleContainer>
+            <ChannelContainer>{channelTitle}</ChannelContainer>
+            <DescriptionContainer>{description}</DescriptionContainer>
 
         </StyledVideoContainer>
     )
@@ -14,6 +37,23 @@ export default function VideoContainer() {
 
 const StyledVideoContainer = styled.div`
     display: flex;
-    width: 80%;
-    flex-wrap: wrap;
+    align-items: center;
+    flex-direction: column;
+`
+
+const VideoBox = styled.iframe`
+    width: 70%;
+    height: 15%;
+`
+
+const TitleContainer = styled.div`
+    margin: 10px;
+`
+
+const ChannelContainer = styled.div`
+    margin: 10px;
+`
+
+const DescriptionContainer = styled.div`
+    margin: 10px;
 `
